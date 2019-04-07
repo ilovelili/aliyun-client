@@ -6,7 +6,6 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	sdk "github.com/aliyun/aliyun-oss-go-sdk/oss"
 )
 
@@ -85,13 +84,13 @@ func (s *Service) Upload(opts *UploadOptions) (resp *UploadResponse) {
 		return
 	}
 
-	options := []oss.Option{}
+	options := []sdk.Option{}
 	if opts.Public {
-		options = append(options, oss.ObjectACL(oss.ACLPublicRead))
+		options = append(options, sdk.ObjectACL(sdk.ACLPublicRead))
 	}
 
 	for k, v := range opts.Meta {
-		options = append(options, oss.Meta(k, v))
+		options = append(options, sdk.Meta(k, v))
 	}
 
 	filenamme := opts.FileName
