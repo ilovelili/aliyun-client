@@ -116,7 +116,7 @@ func (s *Service) Upload(opts *UploadOptions) (resp *UploadResponse) {
 }
 
 // AsyncUpload async upload
-func (s *Service) AsyncUpload(opts *UploadOptions) (respchan chan<- *UploadResponse) {
+func (s *Service) AsyncUpload(opts *UploadOptions) (respchan chan *UploadResponse) {
 	respchan = make(chan *UploadResponse)
 	go func() {
 		respchan <- s.Upload(opts)
