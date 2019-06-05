@@ -3,7 +3,9 @@ package oss
 import (
 	"fmt"
 	"log"
+	"path"
 	"path/filepath"
+	"strings"
 	"time"
 
 	sdk "github.com/aliyun/aliyun-oss-go-sdk/oss"
@@ -11,10 +13,12 @@ import (
 
 // UploadOptions upload response
 type UploadOptions struct {
-	FileName string
-	Public   bool
-	Expire   time.Duration
-	Meta     map[string]string
+	ObjectName   string
+	Public       bool
+	Expire       time.Duration
+	IsFolder     bool   // Is file or folder
+	ParentFolder string // Parent folder
+	Meta         map[string]string
 }
 
 // UploadResponse upload response
@@ -93,9 +97,15 @@ func (s *Service) Upload(opts *UploadOptions) (resp *UploadResponse) {
 		options = append(options, sdk.Meta(k, v))
 	}
 
-	filenamme := opts.FileName
-	objname := resolveObjName(filenamme)
-	err = bucket.PutObjectFromFile(objname, filenamme, options...)
+	filename := opts.ObjectName
+	objname := resolveObjName(filename, opts.ParentFolder)
+
+	if opts.IsFolder {
+		err = bucket.PutObject(objname+"/", strings.NewReader(""), options...)
+	} else {
+		err = bucket.PutObjectFromFile(objname, filename, options...)
+	}
+
 	resp.Error = err
 	if err != nil {
 		return
@@ -114,8 +124,8 @@ func (s *Service) AsyncUpload(opts *UploadOptions) (respchan chan<- *UploadRespo
 	return
 }
 
-func resolveObjName(fullfilename string) string {
-	return filepath.Base(fullfilename)
+func resolveObjName(fullfilename, parent string) string {
+	return path.Join(parent, filepath.Base(fullfilename))
 }
 
 func (ctx *Context) check() {

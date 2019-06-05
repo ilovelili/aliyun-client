@@ -1,0 +1,5 @@
+* { box-sizing: border-box; } body {margin: 0;}body{background-image:url(../img/background_2.png);background-repeat:repeat;background-position:left top;background-attachment:scroll;background-size:auto;}.c1576{padding:0;margin:0;vertical-align:top;}.c1552{height:150px;margin:0 auto 10px auto;padding:5px 5px 5px 5px;width:100%;}.c1681{padding:10px;background-image:url(https://avatars3.githubusercontent.com/u/1956612?s=460&v=4);background-repeat:repeat;background-position:left top;background-attachment:scroll;background-size:auto;}.c2271{padding:0;margin:0;vertical-align:top;width:50%;}.c2280{padding:0;margin:0;vertical-align:top;width:50%;}.c2247{height:150px;margin:0 auto 10px auto;padding:5px 5px 5px 5px;width:100%;}.c2401{padding:10px;}.c3715{padding:0;margin:0;vertical-align:top;}.c3691{height:150px;margin:0 auto 10px auto;padding:5px 5px 5px 5px;width:100%;}
+@media print {
+  @page { margin: 0; }
+  body { margin: 1.6cm; }
+}
